@@ -1,0 +1,29 @@
+.selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.button:hover {
+  background: #e0e0e0;
+}
+
+.value {
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
