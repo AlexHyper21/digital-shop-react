@@ -1,33 +1,45 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './QuantitySelector.module.css';
 
-export default function QuantitySelector({ onQuantityChange }) {
-  const [quantity, setQuantity] = useState(1);
+export default function QuantitySelector({ initial = 1, min = 1, max = 99, disabled = false, onChange }) {
+  const [quantity, setQuantity] = useState(initial);
 
-  const handleDecrease = () => {
-    if (quantity > 1) {
-      const newQuantity = quantity - 1;
-      setQuantity(newQuantity);
-      onQuantityChange(newQuantity);
+  const update = (value) => {
+    const next = Math.min(max, Math.max(min, value));
+    setQuantity(next);
+    if (onChange) {
+      onChange(next);
     }
   };
 
-  const handleIncrease = () => {
-    const newQuantity = quantity + 1;
-    setQuantity(newQuantity);
-    onQuantityChange(newQuantity);
-  };
-
   return (
-    <div className={styles.container}>
-      <button className={styles.btn} onClick={handleDecrease}>−</button>
+    <div className={styles.selector}>
+      <button
+        type="button"
+        className={styles.btn}
+        onClick={() => update(quantity - 1)}
+        disabled={disabled || quantity <= min}
+      >
+        −
+      </button>
       <span className={styles.value}>{quantity}</span>
-      <button className={styles.btn} onClick={handleIncrease}>+</button>
+      <button
+        type="button"
+        className={styles.btn}
+        onClick={() => update(quantity + 1)}
+        disabled={disabled || quantity >= max}
+      >
+        +
+      </button>
     </div>
   );
 }
 
 QuantitySelector.propTypes = {
-  onQuantityChange: PropTypes.func.isRequired,
+  initial: PropTypes.number,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
 };

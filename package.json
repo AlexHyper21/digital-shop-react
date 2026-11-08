@@ -1,30 +1,20 @@
 {
-  "name": "digital-shop-react",
+  "name": "lr2",
+  "private": true,
   "version": "1.0.0",
-  "description": "Digital Shop React App — ЛР 2",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AlexHyper21/digital-shop-react.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/AlexHyper21/digital-shop-react/issues"
-  },
-  "homepage": "https://github.com/AlexHyper21/digital-shop-react#readme",
   "dependencies": {
-    "@vitejs/plugin-react": "^6.1.2",
     "prop-types": "^15.8.1",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "vite": "^8.3.2"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.2.0"
   }
 }

@@ -1,14 +1,19 @@
-﻿import styles from './CartIcon.module.css';
+import PropTypes from 'prop-types';
+import cartIcon from '../../assets/cart.svg';
+import styles from './CartIcon.module.css';
 
-export default function CartIcon({ itemCount }) {
+export default function CartIcon({ count }) {
   return (
-    <div className={styles.cartIcon}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <circle cx="9" cy="21" r="1"></circle>
-        <circle cx="20" cy="21" r="1"></circle>
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-      </svg>
-      {itemCount > 0 && <span className={styles.badge}>{itemCount}</span>}
-    </div>
+    <button type="button" className={styles.cartIcon}>
+      <span className={styles.iconBox}>
+        <img src={cartIcon} alt="" width="24" height="24" />
+        {count > 0 && <span className={styles.badge}>{count}</span>}
+      </span>
+      <span>Корзина</span>
+    </button>
   );
 }
+
+CartIcon.propTypes = {
+  count: PropTypes.number.isRequired,
+};

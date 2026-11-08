@@ -1,76 +1,35 @@
-﻿import { useState } from 'react';
-import Button from './components/Button/Button';
+import { useState } from 'react';
+import Header from './components/Header/Header';
 import ProductCard from './components/ProductCard/ProductCard';
-import QuantitySelector from './components/QuantitySelector/QuantitySelector';
-import CartIcon from './components/CartIcon/CartIcon';
+import { products } from './data/products';
 import styles from './App.module.css';
 
 export default function App() {
-    const [cart, setCart] = useState([]);
-    const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [cart, setCart] = useState([]);
 
-    const products = [
-        {
-            id: 1,
-            name: 'Design System Bundle',
-            price: 49.99,
-            oldPrice: 99.99,
-            rating: 4.8,
-            reviews: 127,
-            image: '📦',
-            format: 'SVG, PNG, WebP',
-            seller: 'Studio Karts'
-        },
-        {
-            id: 2,
-            name: 'Icon Pack - Contour',
-            price: 29.99,
-            oldPrice: 59.99,
-            rating: 4.5,
-            reviews: 89,
-            image: '🎨',
-            format: 'SVG, PDF',
-            seller: 'Digital Assets'
-        }
-    ];
+  const handleAddToCart = (product, quantity) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item));
+      }
+      return [...prev, { id: product.id, name: product.name, price: product.price, quantity }];
+    });
+  };
 
-    const handleAddToCart = (product) => {
-        setCart([...cart, { ...product, quantity: selectedQuantity }]);
-        alert(`Added ${selectedQuantity} copies to cart`);
-        setSelectedQuantity(1);
-    };
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const handleBuyNow = (product) => {
-        alert(`Purchasing ${selectedQuantity} copies`);
-        setSelectedQuantity(1);
-    };
-
-    return (
-        <div className={styles.app}>
-            <header className={styles.header}>
-                <div className={styles.logo}>PixelMarket</div>
-                <CartIcon itemCount={cart.length} />
-            </header>
-
-            <main className={styles.catalog}>
-                <h1>Digital Products Catalog</h1>
-                <div className={styles.grid}>
-                    {products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            onAddToCart={() => handleAddToCart(product)}
-                            onBuyNow={() => handleBuyNow(product)}
-                            quantitySelector={
-                                <QuantitySelector
-                                    value={selectedQuantity}
-                                    onChange={setSelectedQuantity}
-                                />
-                            }
-                        />
-                    ))}
-                </div>
-            </main>
+  return (
+    <>
+      <Header cartCount={cartCount} />
+      <main className={styles.page}>
+        <h1 className={styles.title}>Каталог цифровых товаров</h1>
+        <div className={styles.grid}>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />
+          ))}
         </div>
-    );
+      </main>
+    </>
+  );
 }
